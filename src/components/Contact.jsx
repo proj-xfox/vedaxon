@@ -21,6 +21,7 @@ export default function Contact() {
       });
 
       const data = await res.json();
+
       if (data.success) {
         setStatus("Message sent successfully!");
         e.target.reset();
@@ -46,11 +47,3 @@ export default function Contact() {
     </section>
   );
 }
-
-
-/* emailjs.send("service_prsg8ry","template_34obix9",{
-title: "Test enquiry",
-name: "Suraj Test name",
-message: "Test Message",
-email: "sthawari@yhoo.com",
-}); */

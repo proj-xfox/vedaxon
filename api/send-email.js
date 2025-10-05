@@ -16,7 +16,7 @@ export default async function handler(req, res) {
       process.env.EMAILJS_SERVICE_ID,
       process.env.EMAILJS_TEMPLATE_ID,
       { name, email, message },
-      { publicKey: process.env.EMAILJS_PRIVATE_KEY }
+      { privateKey: process.env.EMAILJS_PRIVATE_KEY }
     );
 
     return res.status(200).json({ success: true });

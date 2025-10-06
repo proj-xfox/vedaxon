@@ -1,14 +1,25 @@
-import profileImg from "../assets/profile.jpg";
+import { motion } from "framer-motion";
 
 export default function Hero() {
   return (
-    <section className="flex flex-col md:flex-row items-center justify-center text-center md:text-left h-screen px-6 bg-gradient-to-r from-gray-800 to-gray-900 text-white pt-20">
-      <img src={profileImg} alt="Profile" className="w-40 h-40 rounded-full mb-6 md:mb-0 md:mr-10 border-4 border-yellow-400"/>
-      <div>
-        <h2 className="text-4xl font-bold">Hi, We are Vedaxon Team</h2>
-        <p className="mt-4 text-lg text-gray-300">We are Full-stack Developer | React | Node.js</p>
-        <p className="mt-2 max-w-md">I build scalable web apps and delightful user experiences. Let’s create something impactful together.</p>
-      </div>
+    <section className="min-h-screen flex flex-col justify-center items-center bg-gradient-to-r from-gray-900 to-gray-800 text-white text-center px-6">
+      <motion.h1 className="text-4xl md:text-6xl font-bold mb-4"
+        initial={{ opacity: 0, y: -50 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ duration: 1 }}>
+        We Build Scalable Software, Web & Mobile Apps
+      </motion.h1>
+      <motion.p className="text-lg md:text-2xl mb-8"
+        initial={{ opacity: 0 }}
+        animate={{ opacity: 1 }}
+        transition={{ delay: 0.5 }}>
+        Leveraging modern technologies to bring your ideas to life
+      </motion.p>
+      <motion.a href="#contact"
+        className="px-8 py-4 bg-yellow-500 rounded-lg font-semibold hover:bg-yellow-400 transition"
+        whileHover={{ scale: 1.05 }}>
+        Get a Free Consultation
+      </motion.a>
     </section>
   );
 }

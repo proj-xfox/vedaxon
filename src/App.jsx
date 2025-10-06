@@ -1,19 +1,32 @@
-import Navbar from "./components/Navbar";
 import Hero from "./components/Hero";
-import Skills from "./components/Skills";
-import Projects from "./components/Projects";
+import Services from "./components/Services";
+import Portfolio from "./components/Portfolio";
+import TechStack from "./components/TechStack";
+import Testimonials from "./components/Testimonials";
 import Contact from "./components/Contact";
 import Footer from "./components/Footer";
+import Navbar from "./components/Navbar";
 
-export default function App() {
+function App() {
   return (
-    <div className="bg-gray-100 text-gray-900">
+    <div className="font-sans text-gray-900 scroll-smooth">
+      {/* Navbar */}
       <Navbar />
-      <Hero />
-      <Skills />
-      <Projects />
-      <Contact />
+
+      {/* Main Content */}
+      <main className="pt-20">
+        <Hero />
+        <Services />
+        <Portfolio />
+        <TechStack />
+        <Testimonials />
+        <Contact />
+      </main>
+
+      {/* Footer */}
       <Footer />
     </div>
   );
 }
+
+export default App;

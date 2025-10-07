@@ -1,5 +1,5 @@
 import { motion } from "framer-motion";
-import { FaLaptopCode, FaMobileAlt, FaCloud, FaBrain,FaServer } from "react-icons/fa";
+import { FaLaptopCode, FaMobileAlt, FaNetworkWired, FaCloud, FaBrain } from "react-icons/fa";
 
 const services = [
   {
@@ -15,11 +15,10 @@ const services = [
       "Cross-platform apps using React Native, Flutter, Swift/Kotlin — fast, modern, and built for growth.",
   },
   {
-    icon: <FaServer className="text-5xl mb-4 text-yellow-500" />,
+    icon: <FaNetworkWired className="text-5xl mb-4 text-yellow-500" />,
     title: "Backend / APIs",
     description: "Node.js, Express, NestJS, Firebase",
   },
-
   {
     icon: <FaCloud className="text-5xl mb-4 text-yellow-500" />,
     title: "Cloud & DevOps",
@@ -36,45 +35,33 @@ const services = [
 
 export default function Services() {
   return (
-    <section id="services" className="py-20 bg-gray-50 text-center relative overflow-hidden">
+    <section id="services" className="py-20 bg-gray-50 text-center relative">
       <h2 className="text-3xl font-bold mb-12 text-gray-900">Our Services</h2>
       <div className="grid gap-10 md:grid-cols-2 lg:grid-cols-4 max-w-6xl mx-auto px-6">
         {services.map((service, index) => (
           <motion.div
             key={index}
-            whileHover={{
-              scale: 1.07,
-              y: -6,
-              boxShadow: "0px 8px 25px rgba(0,0,0,0.12)",
-            }}
-            transition={{
-              type: "spring",
-              stiffness: 500,
-              damping: 25,
-              mass: 0.7,
-              duration: 0.15,
-            }}
             className="relative group"
+            whileHover={{ scale: 1.07, y: -6, zIndex: 10 }}
+            transition={{ type: "spring", stiffness: 500, damping: 25, mass: 0.7 }}
           >
-            {/* Background glow */}
-            <div className="absolute inset-0 rounded-2xl opacity-0 group-hover:opacity-100 transition duration-300 bg-gradient-to-r from-yellow-400 via-orange-400 to-yellow-500 blur-2xl"></div>
+            {/* Glow Background */}
+            <motion.div
+              className="absolute inset-0 rounded-2xl bg-gradient-to-r from-yellow-400 via-orange-400 to-yellow-500 blur-2xl opacity-0 group-hover:opacity-100 transition-opacity duration-300"
+              style={{ zIndex: -1 }}
+            />
 
-            {/* Actual card */}
-            <div className="relative p-8 bg-white rounded-2xl shadow-md hover:shadow-xl border border-transparent hover:border-yellow-400 transition-all duration-150 cursor-pointer">
-              <motion.div
-                whileHover={{ rotate: 8, scale: 1.15 }}
-                transition={{
-                  type: "spring",
-                  stiffness: 400,
-                  damping: 20,
-                  duration: 0.1,
-                }}
-              >
-                {service.icon}
-              </motion.div>
-              <h3 className="text-xl font-semibold mb-3 text-gray-800">{service.title}</h3>
-              <p className="text-gray-600 text-sm leading-relaxed">{service.description}</p>
-            </div>
+            {/* Card */}
+            <motion.div
+              className="relative p-8 bg-white rounded-2xl shadow-md border border-transparent hover:border-yellow-400 transition-all duration-150 cursor-pointer flex flex-col items-center"
+              whileHover={{ rotate: 6 }}
+              transition={{ type: "spring", stiffness: 400, damping: 20 }}
+            >
+              {/* Icon centered */}
+              <div className="mb-4">{service.icon}</div>
+              <h3 className="text-xl font-semibold mb-3 text-gray-800 text-center">{service.title}</h3>
+              <p className="text-gray-600 text-sm leading-relaxed text-center">{service.description}</p>
+            </motion.div>
           </motion.div>
         ))}
       </div>

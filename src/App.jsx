@@ -19,7 +19,7 @@ function App() {
         <Services />
         <Portfolio />
         <TechStack />
-        <Testimonials />
+        {/* <Testimonials /> */}
         <Contact />
       </main>
 

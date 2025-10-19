@@ -24,11 +24,10 @@ export default function Navbar() {
 
   return (
     <nav
-      className={`fixed w-full z-50 transition-all duration-500 backdrop-blur-lg ${
-        scrolled
-          ? "bg-gray-900/90 shadow-lg"
-          : "bg-gradient-to-r from-gray-900/60 via-gray-800/40 to-gray-900/60"
-      }`}
+      className={`fixed w-full z-50 transition-all duration-500 backdrop-blur-lg ${scrolled
+        ? "bg-gray-900/90 shadow-lg"
+        : "bg-gradient-to-r from-gray-900/60 via-gray-800/40 to-gray-900/60"
+        }`}
     >
       <div className="max-w-6xl mx-auto px-6 py-4 flex justify-between items-center">
         {/* Logo */}

@@ -3,6 +3,7 @@ import Services from "./components/Services";
 import Portfolio from "./components/Portfolio";
 import TechStack from "./components/TechStack";
 import Testimonials from "./components/Testimonials";
+import ComingSoon from "./components/ComingSoon";
 import Contact from "./components/Contact";
 import Footer from "./components/Footer";
 import Navbar from "./components/Navbar";
@@ -10,6 +11,8 @@ import Navbar from "./components/Navbar";
 function App() {
   return (
     <div className="font-sans text-gray-900 scroll-smooth">
+
+
       {/* Navbar */}
       <Navbar />
 
@@ -20,6 +23,10 @@ function App() {
         <Portfolio />
         <TechStack />
         {/* <Testimonials /> */}
+
+        <div id="coming-soon">
+          <ComingSoon />
+        </div>
         <Contact />
       </main>
 

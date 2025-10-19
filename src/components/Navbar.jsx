@@ -16,6 +16,7 @@ export default function Navbar() {
   }, []);
 
   const links = [
+    { name: "Our SaaS", to: "coming-soon" },
     { name: "Services", to: "services" },
     { name: "Portfolio", to: "portfolio" },
     { name: "Tech Stack", to: "tech" },

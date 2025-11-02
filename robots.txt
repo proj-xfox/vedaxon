@@ -1,0 +1,16 @@
+# robots.txt for https://vedaxon.com
+
+User-agent: *
+Allow: /
+
+# Block non-public routes (optional safety)
+Disallow: /admin/
+Disallow: /api/
+Disallow: /private/
+
+# Sitemap location
+Sitemap: https://vedaxon.com/sitemap.xml
+
+# Optional: Verification placeholders
+# Google-site-verification: VERIFY_KEY_HERE
+# Bing-site-verification: VERIFY_KEY_HERE

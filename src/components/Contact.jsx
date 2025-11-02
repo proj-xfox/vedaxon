@@ -54,7 +54,7 @@ export default function Contact() {
       Email: ${email}%0A
       Message: ${message}`;
 
-    const encodedNumber = "ODA4NzQyOTg2NA==";
+    const encodedNumber = "OTE4MDg3NDI5ODY0";
 
     const decodedNumber = atob(encodedNumber);
 

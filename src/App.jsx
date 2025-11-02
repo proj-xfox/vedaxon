@@ -3,6 +3,7 @@ import Services from "./components/Services";
 import Portfolio from "./components/Portfolio";
 import TechStack from "./components/TechStack";
 import Testimonials from "./components/Testimonials";
+import Pricing from "./components/Pricing";
 import ComingSoon from "./components/ComingSoon";
 import Contact from "./components/Contact";
 import Footer from "./components/Footer";
@@ -23,7 +24,7 @@ function App() {
         <Portfolio />
         <TechStack />
         {/* <Testimonials /> */}
-
+        <Pricing />
         <div id="coming-soon">
           <ComingSoon />
         </div>

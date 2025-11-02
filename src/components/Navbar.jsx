@@ -20,6 +20,7 @@ export default function Navbar() {
     { name: "Services", to: "services" },
     { name: "Portfolio", to: "portfolio" },
     { name: "Tech Stack", to: "tech" },
+    { name: "Pricing", to: "pricing" },
     { name: "Contact", to: "contact" },
   ];
 

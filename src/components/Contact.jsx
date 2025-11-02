@@ -6,7 +6,8 @@ import { FaUser, FaEnvelope, FaComment } from "react-icons/fa";
 export default function Contact() {
   const [status, setStatus] = useState("");
 
-  const handleSubmit = async (e) => {
+  // EmailJS submission handler (not currently used)
+  const handleSubmit1 = async (e) => {
     e.preventDefault();
     setStatus("Sending...");
 
@@ -17,7 +18,8 @@ export default function Contact() {
     }
 
     try {
-      const publicKey = atob(import.meta.env.VITE_EMAILJS_PUBLIC_KEY_ENCODED);
+      const publicKey = import.meta.env.VITE_EMAILJS_PUBLIC_KEY;
+
       await emailjs.send(
         import.meta.env.VITE_EMAILJS_SERVICE_ID,
         import.meta.env.VITE_EMAILJS_TEMPLATE_ID,
@@ -39,10 +41,34 @@ export default function Contact() {
     }
   };
 
+  // WhatsApp submission handler (currently used)
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    const form = e.target;
+    const name = form.name.value;
+    const email = form.email.value;
+    const message = form.message.value;
+
+    const text = `Hi Vedaxon 👋%0A
+      Name: ${name}%0A
+      Email: ${email}%0A
+      Message: ${message}`;
+
+    const encodedNumber = "ODA4NzQyOTg2NA==";
+
+    const decodedNumber = atob(encodedNumber);
+
+    const url = /Android|iPhone|iPad/i.test(navigator.userAgent)
+      ? `https://wa.me/${decodedNumber}?text=${text}` // mobile
+      : `https://web.whatsapp.com/send?phone=${decodedNumber}&text=${text}`; // desktop
+
+    window.open(url, "_blank");
+  };
+
   return (
     <section id="contact" className="relative py-20 overflow-hidden">
       {/* Animated Gradient Background */}
-<div className="absolute inset-0 -z-10 bg-gradient-to-r from-yellow-100 via-cyan-200 to-purple-200 bg-[length:200%_200%] animate-gradient-x"></div>
+      <div className="absolute inset-0 -z-10 bg-gradient-to-r from-yellow-100 via-cyan-200 to-purple-200 bg-[length:200%_200%] animate-gradient-x"></div>
 
       <motion.h2
         initial={{ opacity: 0, y: -20 }}
@@ -98,11 +124,10 @@ export default function Contact() {
         <button
           type="submit"
           disabled={status === "Sending..."}
-          className={`w-full py-3 rounded-xl text-white font-semibold transition transform ${
-            status === "Sending..."
-              ? "bg-gray-400 cursor-not-allowed"
-              : "bg-gradient-to-r from-yellow-500 to-yellow-600 hover:scale-105 hover:from-yellow-600 hover:to-yellow-700"
-          }`}
+          className={`w-full py-3 rounded-xl text-white font-semibold transition transform ${status === "Sending..."
+            ? "bg-gray-400 cursor-not-allowed"
+            : "bg-gradient-to-r from-yellow-500 to-yellow-600 hover:scale-105 hover:from-yellow-600 hover:to-yellow-700"
+            }`}
         >
           {status === "Sending..." ? "Sending..." : "Send Message"}
         </button>
@@ -113,11 +138,10 @@ export default function Contact() {
               initial={{ opacity: 0, y: -10 }}
               animate={{ opacity: 1, y: 0 }}
               exit={{ opacity: 0, y: -10 }}
-              className={`mt-2 p-3 rounded text-center font-medium ${
-                status.includes("success")
-                  ? "bg-green-200 text-green-800"
-                  : "bg-red-200 text-red-800"
-              }`}
+              className={`mt-2 p-3 rounded text-center font-medium ${status.includes("success")
+                ? "bg-green-200 text-green-800"
+                : "bg-red-200 text-red-800"
+                }`}
             >
               {status}
             </motion.div>

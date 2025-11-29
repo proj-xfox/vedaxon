@@ -1,67 +1,80 @@
 import { motion } from "framer-motion";
-import { FaLaptopCode, FaMobileAlt, FaNetworkWired, FaCloud, FaBrain } from "react-icons/fa";
+import {
+  Code2, Smartphone, Layers, Rocket, Server, ShieldCheck
+} from "lucide-react";
 
-const services = [
-  {
-    icon: <FaLaptopCode className="text-5xl mb-4 text-yellow-500" />,
-    title: "Web Development",
-    description:
-      "High-performance, responsive websites with cutting-edge technologies like React, Vite, and Tailwind.",
-  },
-  {
-    icon: <FaMobileAlt className="text-5xl mb-4 text-yellow-500" />,
-    title: "Mobile App Development",
-    description:
-      "Cross-platform apps using React Native, Flutter, Swift/Kotlin — fast, modern, and built for growth.",
-  },
-  {
-    icon: <FaNetworkWired className="text-5xl mb-4 text-yellow-500" />,
-    title: "Backend / APIs",
-    description: "Node.js, Express, NestJS, Firebase",
-  },
-  {
-    icon: <FaCloud className="text-5xl mb-4 text-yellow-500" />,
-    title: "Cloud & DevOps",
-    description:
-      "Secure, scalable cloud infrastructure — AWS, Vercel, Firebase, and CI/CD automation.",
-  },
-  {
-    icon: <FaBrain className="text-5xl mb-4 text-yellow-500" />,
-    title: "AI & Automation",
-    description:
-      "Integrating AI tools, chatbots, and business automation with OpenAI, LangChain, and custom ML models.",
-  },
-];
+export default function WhatWeDo() {
+  const services = [
+    {
+      title: "Custom Web Applications",
+      desc: "High-performance web apps built for speed, usability, and long-term scalability.",
+      icon: <Code2 size={32} />,
+    },
+    {
+      title: "Mobile App Development",
+      desc: "Beautiful, fast, cross-platform mobile apps for Android & iOS using modern frameworks.",
+      icon: <Smartphone size={32} />,
+    },
+    {
+      title: "SaaS Product Development",
+      desc: "End-to-end SaaS development—from MVP to full-scale product with multi-tenant architecture.",
+      icon: <Layers size={32} />,
+    },
+    {
+      title: "Rapid MVP Launch",
+      desc: "Validate your idea quickly with a production-ready MVP in weeks, not months.",
+      icon: <Rocket size={32} />,
+    },
+    {
+      title: "API Development & Integrations",
+      desc: "Secure, robust REST APIs and integrations for payments, WhatsApp, authentication & more.",
+      icon: <Server size={32} />,
+    },
+    {
+      title: "Secure, Scalable Cloud Deployment",
+      desc: "Optimized deployments using Docker, Render, Vercel, and cloud-native best practices.",
+      icon: <ShieldCheck size={32} />,
+    },
+  ];
 
-export default function Services() {
   return (
-    <section id="services" className="py-20 bg-gray-50 text-center relative">
-      <h2 className="text-3xl font-bold mb-12 text-gray-900">Our Services</h2>
-      <div className="grid gap-10 md:grid-cols-2 lg:grid-cols-4 max-w-6xl mx-auto px-6">
-        {services.map((service, index) => (
-          <motion.div
-            key={index}
-            className="relative group"
-            whileHover={{ scale: 1.07, y: -6, zIndex: 10 }}
-            transition={{ type: "spring", stiffness: 500, damping: 25, mass: 0.7 }}
-          >
-            {/* Glow Background */}
-            <motion.div
-              className="absolute inset-0 rounded-2xl bg-gradient-to-r from-yellow-400 via-orange-400 to-yellow-500 blur-2xl opacity-0 group-hover:opacity-100 transition-opacity duration-300"
-              style={{ zIndex: -1 }}
-            />
+    <section
+      id="services"
+      className="py-20 bg-gray-950 text-white px-6 md:px-16"
+    >
+      <div className="max-w-5xl mx-auto text-center mb-16">
+        <motion.h2
+          initial={{ opacity: 0, y: 20 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.6 }}
+          className="text-4xl md:text-5xl font-bold mb-4"
+        >
+          What We Do
+        </motion.h2>
 
-            {/* Card */}
-            <motion.div
-              className="relative p-8 bg-white rounded-2xl shadow-md border border-transparent hover:border-yellow-400 transition-all duration-150 cursor-pointer flex flex-col items-center"
-              whileHover={{ rotate: 6 }}
-              transition={{ type: "spring", stiffness: 400, damping: 20 }}
-            >
-              {/* Icon centered */}
-              <div className="mb-4">{service.icon}</div>
-              <h3 className="text-xl font-semibold mb-3 text-gray-800 text-center">{service.title}</h3>
-              <p className="text-gray-600 text-sm leading-relaxed text-center">{service.description}</p>
-            </motion.div>
+        <motion.p
+          initial={{ opacity: 0 }}
+          whileInView={{ opacity: 1 }}
+          transition={{ delay: 0.2 }}
+          className="text-lg md:text-xl text-gray-300 max-w-3xl mx-auto"
+        >
+          We build fast, reliable, scalable products using modern engineering.
+          From idea to deployment — we handle everything end-to-end.
+        </motion.p>
+      </div>
+
+      <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-10 max-w-6xl mx-auto">
+        {services.map((service, idx) => (
+          <motion.div
+            key={idx}
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            transition={{ delay: idx * 0.1 }}
+            className="p-8 bg-gray-900/50 backdrop-blur-lg rounded-2xl border border-gray-800 hover:border-yellow-400 transition cursor-default"
+          >
+            <div className="text-yellow-400 mb-4">{service.icon}</div>
+            <h3 className="text-xl font-semibold mb-2">{service.title}</h3>
+            <p className="text-gray-300 text-sm leading-relaxed">{service.desc}</p>
           </motion.div>
         ))}
       </div>

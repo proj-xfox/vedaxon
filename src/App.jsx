@@ -9,7 +9,9 @@ import Contact from "./components/Contact";
 import Footer from "./components/Footer";
 import Navbar from "./components/Navbar";
 import LeadBuzzCaseStudy from "./components/LeadBuzzCaseStudy";
-
+import WhyChooseUs from "./components/WhyChooseUs";
+import EzyClinicCaseStudy from "./components/EzyClinicCaseStudy";
+import EzyClinicMockups from "./components/EzyClinicMockups";
 function App() {
   return (
     <div className="font-sans text-gray-900 scroll-smooth">
@@ -22,18 +24,24 @@ function App() {
       <main className="pt-20">
         <Hero />
         <Services />
+        <WhyChooseUs />
+
         <Portfolio />
         {/* ⭐ NEW: LEADBUZZ CASE STUDY SECTION */}
         <div id="leadbuzz-case-study">
           <LeadBuzzCaseStudy />
         </div>
+        <div id="coming-soon">
+          <ComingSoon />
+        </div>
+
+        <EzyClinicMockups />
+        <EzyClinicCaseStudy />
 
         <TechStack />
         {/* <Testimonials /> */}
         <Pricing />
-        <div id="coming-soon">
-          <ComingSoon />
-        </div>
+
         <Contact />
       </main>
 

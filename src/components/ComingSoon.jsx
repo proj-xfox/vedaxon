@@ -1,7 +1,7 @@
-// src/pages/ComingSoon.jsx
-import React, { useState } from "react";
+import { useState } from "react";
+import { CheckCircle } from "lucide-react";
 
-export default function ComingSoon() {
+export default function ProductShowcase() {
   const [email, setEmail] = useState("");
 
   const handleSubmit = (e) => {
@@ -10,87 +10,56 @@ export default function ComingSoon() {
     setEmail("");
   };
 
+  const uspList = [
+    "Built for Indian clinics & OPD workflows",
+    "Fast, simple UI — zero learning curve",
+    "Role-based access: Doctor, Staff, Reception",
+    "Patient history, visits, payments & follow-ups",
+    "Doctor dashboard with analytics",
+  ];
+
   return (
-    <>
-      {/* Animated background gradient */}
-      <style>{`
-        @keyframes gradientShift {
-          0% { background-position: 0% 50%; }
-          50% { background-position: 100% 50%; }
-          100% { background-position: 0% 50%; }
-        }
-        .animated-bg {
-          background: linear-gradient(135deg, #111827, #1e293b, #111827);
-          background-size: 200% 200%;
-          animation: gradientShift 10s ease infinite;
-        }
-      `}</style>
+    <section className="py-24 bg-gray-950 text-white px-6 md:px-16" id="products">
+      <div className="max-w-5xl mx-auto text-center mb-12">
+        <span className="text-xs bg-green-500 text-black px-3 py-1 rounded-full font-semibold">
+          LIVE NOW 🚀
+        </span>
 
-      {/* Typewriter effect CSS */}
-      <style>{`
-        @keyframes twType { 0%{width:0} 40%{width:100%} 70%{width:100%} 100%{width:0} }
-        @keyframes twBlink { from, to { border-color: transparent } 50% { border-color: #facc15 } }
-        .tw span {
-          border-right: 2px solid #facc15;
-          white-space: nowrap;
-          overflow: hidden;
-          display: inline-block;
-          animation: twType 3.5s steps(40, end) infinite, twBlink .7s step-end infinite;
-        }
-      `}</style>
+        <h2 className="text-4xl md:text-5xl font-bold mt-4 mb-4">EzyClinic</h2>
 
-      <div className="min-h-screen animated-bg flex flex-col items-center justify-center text-white p-6 text-center">
-        <h1 className="text-5xl font-extrabold mb-2 tracking-tight">Vedaxon</h1>
-        <div className="text-lg text-gray-300 mb-6 tw">
-          <span>Empowering India with simple, powerful SaaS products.</span>
-        </div>
-
-        {/* EzyClinic Announcement */}
-        <div className="bg-gray-800 border border-gray-700 rounded-2xl p-6 w-full max-w-3xl shadow-xl mb-8">
-          <span className="text-xs bg-green-500 text-black px-3 py-1 rounded-full font-semibold">LIVE NOW 🚀</span>
-          <h5 className="text-3xl font-bold mt-3 mb-2">EzyClinic</h5>
-          <p className="text-gray-300 mb-5">
-            Modern clinic software for India. Built for doctors, OPD workflows, and growing practices.
-            <br /><br /><br />
-            <span className="text-sm text-yellow-400 italic">For the best onboarding experience, please use a laptop/desktop.
-              Our mobile app provides a dedicated workflow for mobile users.</span>
-          </p>
-          <a
-            href="https://www.ezyclinic.com/"
-            target="_blank"
-            rel="noopener noreferrer"
-            className="inline-block bg-yellow-400 text-gray-900 font-bold px-6 py-3 rounded-lg hover:bg-yellow-500 transition w-full sm:w-auto"
-          >
-            Visit EzyClinic
-          </a>
-          <p className="mt-2 text-yellow-300 text-sm font-medium">www.ezyclinic.com</p>
-        </div>
-
-        {/* Upcoming Products CTA */}
-        <p className="text-gray-300 mb-4 max-w-md">
-          We just shipped our first SaaS. More powerful tools for Indian businesses coming soon.
+        <p className="text-gray-300 text-lg md:text-xl max-w-2xl mx-auto">
+          A modern, fast, easy-to-use Clinic Management Software designed for
+          India. From OPD workflows to patient follow-ups — everything in one place.
         </p>
-
-        <form onSubmit={handleSubmit} className="flex flex-col sm:flex-row gap-3 w-full max-w-md">
-          <input
-            type="email"
-            required
-            placeholder="Enter your email to join the waitlist"
-            value={email}
-            onChange={(e) => setEmail(e.target.value)}
-            className="flex-1 p-3 rounded-lg text-gray-900 focus:outline-none"
-          />
-          <button
-            type="submit"
-            className="bg-yellow-400 text-gray-900 font-bold px-6 py-3 rounded-lg hover:bg-yellow-500 transition"
-          >
-            Notify Me
-          </button>
-        </form>
-
-        <p className="mt-6 text-gray-400 text-sm">Built in India 🇮🇳 for the world</p>
-        <p className="mt-2 text-xs text-gray-600">© {new Date().getFullYear()} Vedaxon Technologies</p>
       </div>
-    </>
+
+      {/* USP Grid */}
+      <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6 max-w-5xl mx-auto mb-12">
+        {uspList.map((usp, index) => (
+          <div key={index} className="flex items-center gap-3 text-gray-300">
+            <CheckCircle className="text-yellow-400" size={20} />
+            <span>{usp}</span>
+          </div>
+        ))}
+      </div>
+
+      {/* Call to Action */}
+      <div className="text-center mb-10">
+        <a
+          href="https://www.ezyclinic.com/"
+          target="_blank"
+          rel="noopener noreferrer"
+          className="inline-block bg-yellow-400 text-gray-900 font-bold px-8 py-4 rounded-lg hover:bg-yellow-500 transition shadow-lg"
+        >
+          Visit EzyClinic →
+        </a>
+
+        <p className="mt-3 text-yellow-300 text-sm">
+          www.ezyclinic.com
+        </p>
+      </div>
+
+
+    </section>
   );
 }

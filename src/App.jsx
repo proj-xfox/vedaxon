@@ -12,6 +12,9 @@ import LeadBuzzCaseStudy from "./components/LeadBuzzCaseStudy";
 import WhyChooseUs from "./components/WhyChooseUs";
 import EzyClinicCaseStudy from "./components/EzyClinicCaseStudy";
 import EzyClinicMockups from "./components/EzyClinicMockups";
+import PremiumAboutVedaxon from "./components/PremiumAboutVedaxon";
+
+
 function App() {
   return (
     <div className="font-sans text-gray-900 scroll-smooth">
@@ -25,7 +28,7 @@ function App() {
         <Hero />
         <Services />
         <WhyChooseUs />
-
+        <PremiumAboutVedaxon />
         <Portfolio />
         {/* ⭐ NEW: LEADBUZZ CASE STUDY SECTION */}
         <div id="leadbuzz-case-study">

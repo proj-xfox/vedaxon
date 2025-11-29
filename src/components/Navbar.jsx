@@ -18,6 +18,7 @@ export default function Navbar() {
   const links = [
     { name: "Our SaaS", to: "coming-soon" },
     { name: "Services", to: "services" },
+    { name: "About", to: "about" },            // ⭐ NEW: ADDED ABOUT HERE
     { name: "Portfolio", to: "portfolio" },
     { name: "Tech Stack", to: "tech" },
     { name: "Pricing", to: "pricing" },
@@ -32,6 +33,7 @@ export default function Navbar() {
         }`}
     >
       <div className="max-w-6xl mx-auto px-6 py-4 flex justify-between items-center">
+
         {/* Logo */}
         <div className="text-2xl font-extrabold text-yellow-400 tracking-wide">
           VedaXon

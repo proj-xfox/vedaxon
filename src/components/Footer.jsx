@@ -30,7 +30,8 @@ export default function Footer() {
               VedaXon
             </h3>
             <p className="text-gray-400 text-sm max-w-xs">
-              We build **fast, modern, and scalable** SaaS products and custom dashboards for ambitious founders and teams.
+              We build <strong className="text-white">fast, modern, and scalable</strong> SaaS products
+              and custom dashboards for ambitious founders and teams.
             </p>
           </div>
 

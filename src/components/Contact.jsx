@@ -1,153 +1,228 @@
 import { useState } from "react";
 import emailjs from "@emailjs/browser";
 import { motion, AnimatePresence } from "framer-motion";
-import { FaUser, FaEnvelope, FaComment } from "react-icons/fa";
+import {
+  FaCheckCircle,
+  FaSpinner,
+  FaTimesCircle,
+  FaWhatsapp
+} from "react-icons/fa";
+
+const STATUS = {
+  IDLE: "IDLE",
+  SENDING: "SENDING",
+  SUCCESS: "SUCCESS",
+  ERROR: "ERROR",
+  SPAM: "SPAM",
+};
+
+const WA_NUMBER = "918087429864";
 
 export default function Contact() {
-  const [status, setStatus] = useState("");
+  const [status, setStatus] = useState(STATUS.IDLE);
+  const [formData, setFormData] = useState({ name: "", email: "", message: "" });
 
-  // EmailJS submission handler (not currently used)
-  const handleSubmit1 = async (e) => {
+  const handleChange = (e) => {
+    setFormData({ ...formData, [e.target.name]: e.target.value });
+  };
+
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    setStatus("Sending...");
+    setStatus(STATUS.SENDING);
 
     const form = e.target;
     if (form.botcheck.value) {
-      setStatus("Spam detected!");
+      setStatus(STATUS.SPAM);
       return;
     }
 
     try {
-      const publicKey = import.meta.env.VITE_EMAILJS_PUBLIC_KEY;
-
       await emailjs.send(
         import.meta.env.VITE_EMAILJS_SERVICE_ID,
         import.meta.env.VITE_EMAILJS_TEMPLATE_ID,
-        {
-          name: form.name.value,
-          email: form.email.value,
-          message: form.message.value,
-        },
-        publicKey
+        formData,
+        import.meta.env.VITE_EMAILJS_PUBLIC_KEY
       );
 
-      setStatus("Message sent successfully!");
-      form.reset();
-      setTimeout(() => setStatus(""), 5000);
+      setStatus(STATUS.SUCCESS);
+      setFormData({ name: "", email: "", message: "" });
+
+      setTimeout(() => setStatus(STATUS.IDLE), 4500);
     } catch (err) {
-      console.error("EmailJS error:", err);
-      setStatus(err.text || "Failed to send message.");
-      setTimeout(() => setStatus(""), 5000);
+      console.error(err);
+      setStatus(STATUS.ERROR);
+      setTimeout(() => setStatus(STATUS.IDLE), 4500);
     }
   };
 
-  // WhatsApp submission handler (currently used)
-  const handleSubmit = (e) => {
-    e.preventDefault();
-    const form = e.target;
-    const name = form.name.value;
-    const email = form.email.value;
-    const message = form.message.value;
-
-    const text = `Hi Vedaxon 👋%0A
-      Name: ${name}%0A
-      Email: ${email}%0A
-      Message: ${message}`;
-
-    const encodedNumber = "OTE4MDg3NDI5ODY0";
-
-    const decodedNumber = atob(encodedNumber);
-
-    const url = /Android|iPhone|iPad/i.test(navigator.userAgent)
-      ? `https://wa.me/${decodedNumber}?text=${text}` // mobile
-      : `https://web.whatsapp.com/send?phone=${decodedNumber}&text=${text}`; // desktop
-
-    window.open(url, "_blank");
+  const handleWhatsApp = () => {
+    const msg = encodeURIComponent(
+      `Hi Vedaxon 👋\nName: ${formData.name}\nEmail: ${formData.email}\nMessage: ${formData.message}`
+    );
+    window.open(`https://wa.me/${WA_NUMBER}?text=${msg}`, "_blank");
   };
 
+  const overlayVariants = {
+    hidden: { opacity: 0, scale: 0.95 },
+    visible: { opacity: 1, scale: 1, transition: { duration: 0.25 } },
+    exit: { opacity: 0, scale: 0.95 },
+  };
+
+  const isDisabled = status === STATUS.SENDING || status === STATUS.SUCCESS;
+
   return (
-    <section id="contact" className="relative py-20 overflow-hidden">
-      {/* Animated Gradient Background */}
-      <div className="absolute inset-0 -z-10 bg-gradient-to-r from-yellow-100 via-cyan-200 to-purple-200 bg-[length:200%_200%] animate-gradient-x"></div>
+    <section id="contact" className="relative py-24 bg-gray-50">
+      <div className="max-w-4xl mx-auto px-6">
 
-      <motion.h2
-        initial={{ opacity: 0, y: -20 }}
-        animate={{ opacity: 1, y: 0 }}
-        className="text-4xl font-extrabold mb-12 text-center text-gray-900"
-      >
-        Get in Touch
-      </motion.h2>
-
-      <motion.form
-        onSubmit={handleSubmit}
-        initial={{ opacity: 0, y: 20 }}
-        animate={{ opacity: 1, y: 0 }}
-        className="max-w-xl mx-auto bg-white/95 backdrop-blur-sm p-10 rounded-2xl shadow-2xl border border-gray-200 space-y-6 relative z-10"
-      >
-        <input type="text" name="botcheck" style={{ display: "none" }} />
-
-        <div className="relative">
-          <FaUser className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400" />
-          <input
-            type="text"
-            name="name"
-            placeholder="Your Name"
-            disabled={status === "Sending..."}
-            className="w-full pl-10 p-3 border border-gray-300 rounded focus:outline-none focus:ring-2 focus:ring-yellow-400 focus:border-yellow-400 transition"
-            required
-          />
-        </div>
-
-        <div className="relative">
-          <FaEnvelope className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400" />
-          <input
-            type="email"
-            name="email"
-            placeholder="Your Email"
-            disabled={status === "Sending..."}
-            className="w-full pl-10 p-3 border border-gray-300 rounded focus:outline-none focus:ring-2 focus:ring-yellow-400 focus:border-yellow-400 transition"
-            required
-          />
-        </div>
-
-        <div className="relative">
-          <FaComment className="absolute left-3 top-3 text-gray-400" />
-          <textarea
-            name="message"
-            placeholder="Your Message"
-            disabled={status === "Sending..."}
-            className="w-full pl-10 p-3 border border-gray-300 rounded focus:outline-none focus:ring-2 focus:ring-yellow-400 focus:border-yellow-400 transition h-32 resize-none"
-            required
-          />
-        </div>
-
-        <button
-          type="submit"
-          disabled={status === "Sending..."}
-          className={`w-full py-3 rounded-xl text-white font-semibold transition transform ${status === "Sending..."
-            ? "bg-gray-400 cursor-not-allowed"
-            : "bg-gradient-to-r from-yellow-500 to-yellow-600 hover:scale-105 hover:from-yellow-600 hover:to-yellow-700"
-            }`}
+        <motion.h2
+          initial={{ opacity: 0, y: -15 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true }}
+          className="text-4xl md:text-5xl font-black text-center text-gray-900 mb-4"
         >
-          {status === "Sending..." ? "Sending..." : "Send Message"}
-        </button>
+          Ready to Build Something?
+        </motion.h2>
 
-        <AnimatePresence>
-          {status && (
-            <motion.div
-              initial={{ opacity: 0, y: -10 }}
-              animate={{ opacity: 1, y: 0 }}
-              exit={{ opacity: 0, y: -10 }}
-              className={`mt-2 p-3 rounded text-center font-medium ${status.includes("success")
-                ? "bg-green-200 text-green-800"
-                : "bg-red-200 text-red-800"
-                }`}
+        <motion.p
+          initial={{ opacity: 0 }}
+          whileInView={{ opacity: 1 }}
+          viewport={{ once: true }}
+          transition={{ delay: 0.2 }}
+          className="text-center text-lg text-gray-600 mb-12"
+        >
+          Share your idea — I’ll get back to you within a few hours.
+        </motion.p>
+
+        {/* Form Card */}
+        <motion.div
+          initial={{ opacity: 0, y: 15 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true }}
+          className="relative bg-white p-8 md:p-12 rounded-2xl border border-gray-200 shadow-[0_8px_30px_rgb(0,0,0,0.06)]"
+        >
+
+          <AnimatePresence>
+            {status !== STATUS.IDLE && (
+              <motion.div
+                variants={overlayVariants}
+                initial="hidden"
+                animate="visible"
+                exit="exit"
+                className="absolute inset-0 rounded-2xl flex items-center justify-center bg-white/90 backdrop-blur-sm z-20"
+              >
+                {status === STATUS.SENDING && (
+                  <div className="text-center text-blue-600">
+                    <FaSpinner className="animate-spin w-10 h-10 mx-auto mb-3" />
+                    <p className="text-xl font-semibold">Sending...</p>
+                  </div>
+                )}
+
+                {status === STATUS.SUCCESS && (
+                  <div className="text-center text-green-600">
+                    <FaCheckCircle className="w-10 h-10 mx-auto mb-3" />
+                    <p className="text-xl font-semibold">Message Sent!</p>
+                    <p className="text-gray-600 mt-2">I'll reply shortly.</p>
+                  </div>
+                )}
+
+                {(status === STATUS.ERROR || status === STATUS.SPAM) && (
+                  <div className="text-center text-red-600">
+                    <FaTimesCircle className="w-10 h-10 mx-auto mb-3" />
+                    <p className="text-xl font-semibold">
+                      {status === STATUS.ERROR ? "Something went wrong." : "Spam detected."}
+                    </p>
+                    <p className="text-gray-600 mt-2">Try WhatsApp instead.</p>
+                  </div>
+                )}
+              </motion.div>
+            )}
+          </AnimatePresence>
+
+          {/* Form */}
+          <form onSubmit={handleSubmit} className="space-y-6">
+
+            <input type="text" name="botcheck" style={{ display: "none" }} />
+
+            <div>
+              <label className="text-gray-700 font-medium text-sm">Your Name</label>
+              <input
+                type="text"
+                name="name"
+                value={formData.name}
+                onChange={handleChange}
+                disabled={isDisabled}
+                required
+                className="mt-2 w-full px-4 py-3 rounded-xl border border-gray-300 bg-white text-gray-800 
+                           placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-blue-600 
+                           focus:border-blue-600 transition shadow-sm"
+                placeholder="John Doe"
+              />
+            </div>
+
+            <div>
+              <label className="text-gray-700 font-medium text-sm">Email Address</label>
+              <input
+                type="email"
+                name="email"
+                value={formData.email}
+                onChange={handleChange}
+                disabled={isDisabled}
+                required
+                className="mt-2 w-full px-4 py-3 rounded-xl border border-gray-300 bg-white text-gray-800 
+                           placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-blue-600 
+                           focus:border-blue-600 transition shadow-sm"
+                placeholder="you@example.com"
+              />
+            </div>
+
+            <div>
+              <label className="text-gray-700 font-medium text-sm">Message</label>
+              <textarea
+                name="message"
+                value={formData.message}
+                onChange={handleChange}
+                disabled={isDisabled}
+                required
+                className="mt-2 w-full px-4 py-3 h-32 rounded-xl border border-gray-300 bg-white text-gray-800 
+                           placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-blue-600 
+                           focus:border-blue-600 transition shadow-sm resize-none"
+                placeholder="Tell me about your project..."
+              />
+            </div>
+
+            <button
+              type="submit"
+              disabled={isDisabled}
+              className={`w-full py-3 rounded-xl text-white font-bold text-lg shadow-lg transition 
+               ${isDisabled ? "bg-blue-300" :
+                  "bg-blue-600 hover:bg-blue-700 hover:shadow-xl active:scale-[0.98]"}`}
             >
-              {status}
-            </motion.div>
-          )}
-        </AnimatePresence>
-      </motion.form>
+              {status === STATUS.SENDING ? (
+                <span className="flex justify-center items-center">
+                  <FaSpinner className="animate-spin mr-2" /> Sending...
+                </span>
+              ) : (
+                "Send Message"
+              )}
+            </button>
+          </form>
+
+          {/* WhatsApp Contact */}
+          <div className="text-center mt-8 pt-6 border-t border-gray-200">
+            <p className="text-gray-600 mb-3">Or reach out instantly:</p>
+
+            <button
+              onClick={handleWhatsApp}
+              className="inline-flex items-center px-6 py-3 rounded-full bg-green-500 text-white 
+                         font-semibold shadow-lg hover:bg-green-600 hover:shadow-xl transition 
+                         active:scale-[0.97]"
+            >
+              <FaWhatsapp className="w-5 h-5 mr-2" />
+              Chat on WhatsApp
+            </button>
+          </div>
+        </motion.div>
+      </div>
     </section>
   );
 }

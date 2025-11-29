@@ -7,10 +7,15 @@ const projects = [
     title: "EzyClinic – Clinic Management SaaS",
     img: "/project1.png", // add a thumbnail in your public folder
     tech: "React, Express, PostgreSQL, Docker",
-    link: "#"
+
   },
-  { title: "Project Two", img: "/project2.png", tech: "Flutter, Firebase", link: "#" },
-  { title: "Project Three", img: "/project3.png", tech: "Next.js, Tailwind", link: "#" },
+  {
+    title: "LeadBuzz – Lead Manager(CRM)",
+    img: "/leadbuzz.png",
+    tech: "React, Node.js, PostgreSQL, Neon, Render",
+
+  },
+  { title: "Project Three", img: "/project3.png", tech: "Next.js, Tailwind", },
 ];
 
 export default function Portfolio() {

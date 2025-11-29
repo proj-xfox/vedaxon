@@ -8,6 +8,7 @@ import ComingSoon from "./components/ComingSoon";
 import Contact from "./components/Contact";
 import Footer from "./components/Footer";
 import Navbar from "./components/Navbar";
+import LeadBuzzCaseStudy from "./components/LeadBuzzCaseStudy";
 
 function App() {
   return (
@@ -22,6 +23,11 @@ function App() {
         <Hero />
         <Services />
         <Portfolio />
+        {/* ⭐ NEW: LEADBUZZ CASE STUDY SECTION */}
+        <div id="leadbuzz-case-study">
+          <LeadBuzzCaseStudy />
+        </div>
+
         <TechStack />
         {/* <Testimonials /> */}
         <Pricing />

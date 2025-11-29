@@ -5,3 +5,43 @@
 body {
   font-family: sans-serif;
 }
+
+
+/*Swiper*/
+
+.swiper-button-next,
+.swiper-button-prev {
+  color: #000 !important;
+}
+
+.swiper-pagination-bullet {
+  background: #aaa !important;
+}
+
+.swiper-pagination-bullet-active {
+  background: #000 !important;
+}
+
+/* Make arrows minimal + elegant */
+.swiper-button-next,
+.swiper-button-prev {
+  color: #e0e0e0 !important;
+  /* soft dark grey */
+  width: 40px !important;
+  height: 40px !important;
+}
+
+/* Remove default background arrow icon box */
+.swiper-button-next::after,
+.swiper-button-prev::after {
+  font-size: 22px !important;
+  font-weight: 600 !important;
+  color: #444 !important;
+}
+
+/* Hover effect */
+.swiper-button-next:hover::after,
+.swiper-button-prev:hover::after {
+  color: #000 !important;
+  /* darker on hover */
+}

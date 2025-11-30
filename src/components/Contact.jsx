@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import emailjs from "@emailjs/browser";
 import { motion, AnimatePresence } from "framer-motion";
 import {
@@ -20,7 +20,55 @@ const WA_NUMBER = "918087429864";
 
 export default function Contact() {
   const [status, setStatus] = useState(STATUS.IDLE);
-  const [formData, setFormData] = useState({ name: "", email: "", message: "" });
+
+  // NEW: detect demo / WL / product from URL
+  const [intent, setIntent] = useState(null);
+
+  const [formData, setFormData] = useState({
+    name: "",
+    email: "",
+    message: ""
+  });
+
+  // 🔥 Auto-detect URL parameters
+  useEffect(() => {
+    const params = new URLSearchParams(window.location.search);
+    const type = params.get("type"); // demo | white-label
+    const product = params.get("product"); // leadbuzz | broker | ezyclinic
+
+    if (type && product) {
+      const prettyProduct =
+        product.charAt(0).toUpperCase() + product.slice(1);
+
+      /*  const presetMessage =
+         type === "demo"
+           ? `I'd like to request a demo for ${prettyProduct}.`
+           : `I want to enquire about white-labeling ${prettyProduct}.`;
+  */
+      let presetMessage = "";
+
+      if (type === "demo") {
+        presetMessage = `I'd like to request a demo for ${prettyProduct}.`;
+      }
+      else if (type === "white-label") {
+        presetMessage = `I want to enquire about white-labeling ${prettyProduct}.`;
+      }
+      else if (type === "consultation") {
+        presetMessage = `I'd like to request a free consultation rearding white-labeling.`;
+      }
+      // Set context for banner
+      setIntent({
+        type,
+        product: prettyProduct
+      });
+
+      // Pre-fill message
+      setFormData((prev) => ({
+        ...prev,
+        message: presetMessage
+      }));
+    }
+  }, []);
 
   const handleChange = (e) => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
@@ -40,7 +88,13 @@ export default function Contact() {
       await emailjs.send(
         import.meta.env.VITE_EMAILJS_SERVICE_ID,
         import.meta.env.VITE_EMAILJS_TEMPLATE_ID,
-        formData,
+        {
+          name: formData.name,
+          email: formData.email,
+          message: formData.message,
+          intent_type: intent?.type || "general",
+          intent_product: intent?.product || "none"
+        },
         import.meta.env.VITE_EMAILJS_PUBLIC_KEY
       );
 
@@ -92,6 +146,21 @@ export default function Contact() {
         >
           Share your idea — I’ll get back to you within a few hours.
         </motion.p>
+
+        {/* 🔥 NEW: Dynamic Intent Banner */}
+        {intent && (
+          <div className="mb-8 bg-blue-50 text-blue-700 p-4 rounded-xl text-center font-semibold border border-blue-200">
+            {intent.type === "demo" && (
+              <>Demo Request for <span className="font-bold">{intent.product}</span></>
+            )}
+            {intent.type === "white-label" && (
+              <>White-label Enquiry for <span className="font-bold">{intent.product}</span></>
+            )}
+            {intent.type === "consultation" && (
+              <>Enquiry  <span className="font-bold">{intent.product}</span></>
+            )}
+          </div>
+        )}
 
         {/* Form Card */}
         <motion.div

@@ -45,3 +45,12 @@ body {
   color: #000 !important;
   /* darker on hover */
 }
+
+html {
+  scroll-behavior: smooth;
+}
+
+/* Reduce scroll-jank for large pages */
+html.is-scrolling {
+  scroll-behavior: auto !important;
+}

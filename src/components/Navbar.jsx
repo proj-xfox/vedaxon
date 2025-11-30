@@ -1,10 +1,10 @@
 import { useState, useEffect } from "react";
 import { HiMenu, HiX } from "react-icons/hi";
-import { Link as ScrollLink } from "react-scroll";
 
 export default function Navbar() {
   const [isOpen, setIsOpen] = useState(false);
   const [scrolled, setScrolled] = useState(false);
+
   const toggleMenu = () => setIsOpen(!isOpen);
 
   useEffect(() => {
@@ -15,21 +15,35 @@ export default function Navbar() {
     return () => window.removeEventListener("scroll", handleScroll);
   }, []);
 
+  // ⭐ Direct Smooth Scroll (no react-scroll jitters)
+  const scrollToSection = (id) => {
+    const el = document.getElementById(id);
+    if (!el) return;
+    const offset = el.offsetTop - 80; // adjust for navbar height
+
+    window.scrollTo({
+      top: offset,
+      behavior: "smooth",
+    });
+
+    setIsOpen(false); // close mobile menu
+  };
+
   const links = [
-    { name: "Our SaaS", to: "coming-soon" },
-    { name: "Services", to: "services" },
-    { name: "About", to: "about" },            // ⭐ NEW: ADDED ABOUT HERE
-    { name: "Portfolio", to: "portfolio" },
-    { name: "Tech Stack", to: "tech" },
-    { name: "Pricing", to: "pricing" },
-    { name: "Contact", to: "contact" },
+    { name: "Our SaaS", id: "coming-soon" },
+    { name: "Services", id: "services" },
+    { name: "About", id: "about" },
+    { name: "Portfolio", id: "portfolio" },
+    { name: "Tech Stack", id: "tech" },
+    { name: "Pricing", id: "pricing" },
+    { name: "Contact", id: "contact" },
   ];
 
   return (
     <nav
       className={`fixed w-full z-50 transition-all duration-500 backdrop-blur-lg ${scrolled
-        ? "bg-gray-900/90 shadow-lg"
-        : "bg-gradient-to-r from-gray-900/60 via-gray-800/40 to-gray-900/60"
+          ? "bg-gray-900/90 shadow-lg"
+          : "bg-gradient-to-r from-gray-900/60 via-gray-800/40 to-gray-900/60"
         }`}
     >
       <div className="max-w-6xl mx-auto px-6 py-4 flex justify-between items-center">
@@ -42,16 +56,13 @@ export default function Navbar() {
         {/* Desktop Links */}
         <div className="hidden md:flex space-x-8">
           {links.map((link, i) => (
-            <ScrollLink
+            <button
               key={i}
-              to={link.to}
-              smooth={true}
-              duration={600}
-              offset={-80}
+              onClick={() => scrollToSection(link.id)}
               className="cursor-pointer text-white hover:text-yellow-400 transition font-medium"
             >
               {link.name}
-            </ScrollLink>
+            </button>
           ))}
         </div>
 
@@ -69,16 +80,12 @@ export default function Navbar() {
           <ul className="flex flex-col items-center space-y-4 py-4">
             {links.map((link, i) => (
               <li key={i}>
-                <ScrollLink
-                  to={link.to}
-                  smooth={true}
-                  duration={600}
-                  offset={-80}
+                <button
+                  onClick={() => scrollToSection(link.id)}
                   className="cursor-pointer text-white hover:text-yellow-400 transition text-lg"
-                  onClick={() => setIsOpen(false)}
                 >
                   {link.name}
-                </ScrollLink>
+                </button>
               </li>
             ))}
           </ul>

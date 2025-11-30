@@ -1,0 +1,18 @@
+import { motion } from "framer-motion";
+
+export default function RevealLeft({ children, delay = 0 }) {
+    return (
+        <motion.div
+            initial={{ opacity: 0, x: -40 }}
+            whileInView={{ opacity: 1, x: 0 }}
+            viewport={{ once: false, amount: 0.2 }}
+            transition={{
+                duration: 0.7,
+                delay,
+                ease: [0.22, 1, 0.36, 1],
+            }}
+        >
+            {children}
+        </motion.div>
+    );
+}

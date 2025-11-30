@@ -95,7 +95,7 @@ export default function Footer() {
         <div className="pt-6 text-center">
           <p className="text-gray-500 text-sm">
             © {new Date().getFullYear()} VedaXon. All rights reserved. |
-            Designed & Built with ❤️ using React & Tailwind.
+            Crafted with precision. Built for performance.
           </p>
         </div>
 

@@ -80,7 +80,7 @@ export default function Contact() {
           viewport={{ once: true }}
           className="text-4xl md:text-5xl font-black text-center text-gray-900 mb-4"
         >
-          Ready to Build Something?
+          Start your project — let’s talk
         </motion.h2>
 
         <motion.p

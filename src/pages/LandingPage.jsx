@@ -20,10 +20,14 @@ export default function LandingPage() {
     return (
         <main className="pt-20">
             <Hero />
-            <Services />
+            <div id="services">
+                <Services />
+            </div>
             <WhyChooseUs />
             <PremiumAboutVedaxon />
-            <Portfolio />
+            <div id="portfolio">
+                <Portfolio />
+            </div>
             <ProductAccelerators />
 
             {/* Showcase Sections */}
@@ -53,7 +57,9 @@ export default function LandingPage() {
 
             <TechStack />
             <Pricing />
-            <Contact />
+            <div id="contact">
+                <Contact />
+            </div>
         </main>
     );
 }

@@ -1,99 +1,51 @@
+import { BrowserRouter, Routes, Route, useLocation } from "react-router-dom";
 import { useEffect } from "react";
-
-import Hero from "./components/Hero";
-import Services from "./components/Services";
-import Portfolio from "./components/Portfolio";
-import TechStack from "./components/TechStack";
-import Testimonials from "./components/Testimonials";
-import Pricing from "./components/Pricing";
-import ComingSoon from "./components/ComingSoon";
-import Contact from "./components/Contact";
-import Footer from "./components/Footer";
 import Navbar from "./components/Navbar";
-import LeadBuzzCaseStudy from "./components/LeadBuzzCaseStudy";
-import WhyChooseUs from "./components/WhyChooseUs";
-import EzyClinicCaseStudy from "./components/EzyClinicCaseStudy";
-import EzyClinicMockups from "./components/EzyClinicMockups";
-import PremiumAboutVedaxon from "./components/PremiumAboutVedaxon";
-import ProductAccelerators from "./components/ProductAccelerators";
-import LeadBuzzShowcase from "./components/showcase/LeadBuzzShowcase";
-import BrokerShowcase from "./components/showcase/BrokerShowcase";
-import EzyClinicShowcase from "./components/showcase/EzyClinicShowcase";
+import Footer from "./components/Footer";
 import BackToTop from "./components/BackToTop";
-import StickyWLCTA from "./components/StickyWLCTA";
+
+import LandingPage from "./pages/LandingPage";
+import BlogList from "./pages/BlogList";
+import BlogPost from "./pages/BlogPost";
+
+function AppWrapper() {
+  return (
+    <BrowserRouter>
+      <App />
+    </BrowserRouter>
+  );
+}
 
 function App() {
+  const location = useLocation();
 
-  // 🌟 FIX: Force smooth scroll to #contact or any hash AFTER render
+  // ⭐ Smooth anchor scroll fix (Router-friendly)
   useEffect(() => {
-    const hash = window.location.hash;
+    const hash = location.hash;
+    if (!hash) return;
 
-    if (hash) {
-      // Temporarily disable smooth scrolling
-      document.documentElement.style.scrollBehavior = "auto";
+    document.documentElement.style.scrollBehavior = "auto";
 
-      // Execute jump immediately when DOM paints
-      requestAnimationFrame(() => {
-        const el = document.querySelector(hash);
-        if (el) {
-          el.scrollIntoView({ behavior: "auto", block: "start" });
-        }
+    requestAnimationFrame(() => {
+      const el = document.querySelector(hash);
+      if (el) el.scrollIntoView({ behavior: "auto", block: "start" });
 
-        // Restore smooth scroll ALMOST instantly
-        setTimeout(() => {
-          document.documentElement.style.scrollBehavior = "smooth";
-        }, 5); // only 5ms, not 50-150ms!
-      });
-    }
-  }, []);
-
+      setTimeout(() => {
+        document.documentElement.style.scrollBehavior = "smooth";
+      }, 5);
+    });
+  }, [location]);
 
   return (
     <div className="font-sans text-gray-900 scroll-smooth">
 
-      {/* Navbar */}
       <Navbar />
 
-      {/* Main Content */}
-      <main className="pt-20">
-        <Hero />
-        <Services />
-        <WhyChooseUs />
-        <PremiumAboutVedaxon />
-        <Portfolio />
-        <ProductAccelerators />
-
-        {/* Showcase Sections */}
-        <div id="leadbuzz-showcase">
-          <LeadBuzzShowcase />
-        </div>
-
-        <div id="broker-showcase">
-          <BrokerShowcase />
-        </div>
-
-        <div id="ezyclinic-showcase">
-          <EzyClinicShowcase />
-        </div>
-
-        {/* Case Studies */}
-        <div id="leadbuzz-case-study">
-          <LeadBuzzCaseStudy />
-        </div>
-
-        <div id="coming-soon">
-          <ComingSoon />
-        </div>
-
-        <EzyClinicMockups />
-        <EzyClinicCaseStudy />
-
-        <TechStack />
-        {/* <Testimonials /> */}
-        <Pricing />
-
-        <Contact />
-      </main>
+      <Routes>
+        <Route path="/" element={<LandingPage />} />
+        <Route path="/blog" element={<BlogList />} />
+        <Route path="/blog/:slug" element={<BlogPost />} />
+      </Routes>
 
       <BackToTop />
       <Footer />
@@ -101,4 +53,4 @@ function App() {
   );
 }
 
-export default App;
+export default AppWrapper;

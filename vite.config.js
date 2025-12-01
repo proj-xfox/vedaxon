@@ -1,7 +1,12 @@
 import { defineConfig } from "vite";
 import react from "@vitejs/plugin-react";
+import markdown from "vite-plugin-markdown";
 
 export default defineConfig({
-   base: "/", // root path for custom domain
-  plugins: [react()],
+  plugins: [
+    react(),
+    markdown({
+      mode: ["html", "toc", "meta"],
+    }),
+  ],
 });
